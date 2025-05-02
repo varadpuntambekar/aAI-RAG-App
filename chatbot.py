@@ -155,25 +155,42 @@ class embed_search_retrieve(object):
         docs_to_split = []
         for file in doc_list:
             
-            if file.endswith('.pdf'):
-                loader = PyPDFLoader( file, mode='single')
-                one_page = loader.load()
-                docs_to_split.extend(one_page)
+            # if file.endswith('.pdf'):
+            #     loader = PyPDFLoader( file, mode='single')
+            #     one_page = loader.load()
+            #     docs_to_split.extend(one_page)
             
+            # if file.endswith('.docx' or '.doc'):
+            #     loader = UnstructuredWordDocumentLoader(file, mode = 'single')
+            #     one_page = loader.load()
+            #     docs_to_split.extend(one_page)
+
+            # if file.endswith('.xlsx' ):
+            #     loader = UnstructuredExcelLoader(file, mode='single')
+            #     one_page = loader.load()
+            #     docs_to_split.extend(one_page)
+            
+            # if file.endswith('.ppt' or 'pptx'):
+            #     loader = UnstructuredPowerPointLoader( file, mode = 'single')
+            #     one_page = loader.load()
+            #     docs_to_split.extend(one_page)
+
+        #Writing a new and cleaner version of the code, with only one if statement and a common last two statements
+         
+            if file.endswith('.pdf'):
+                loader = PyPDFLoader( file, mode='page')
+
             if file.endswith('.docx' or '.doc'):
                 loader = UnstructuredWordDocumentLoader(file, mode = 'single')
-                one_page = loader.load()
-                docs_to_split.extend(one_page)
 
             if file.endswith('.xlsx' ):
                 loader = UnstructuredExcelLoader(file, mode='single')
-                one_page = loader.load()
-                docs_to_split.extend(one_page)
-            
+
             if file.endswith('.ppt' or 'pptx'):
                 loader = UnstructuredPowerPointLoader( file, mode = 'single')
-                one_page = loader.load()
-                docs_to_split.extend(one_page)
+
+            one_page = loader.load()
+            docs_to_split.extend(one_page)
 
         logging.debug(f"==={len(docs_to_split)} Docs locked and loaded, ready to be split and embedded ====")
         return docs_to_split
@@ -237,18 +254,16 @@ class embed_search_retrieve(object):
 
 
 
-def chat(question, context):
+def chat(question, context, task = 'summarise'):
     '''
     Takes in a user input and generates a response from an LLM
     '''
     
     
-    template = '''
+    qa_template = '''
             You are a question answer answering assistant with Retrieval Augmented Generation Capabilities. The context entered
             here is the question entered by the user and a document that has been searched and retrieved to be the most relevant to the 
             user's query.
-
-            If asked by the user specifically, you can also act as a summarization agent, that summarizes the document in 100 words or so.
 
             Use three sentences maximum to answer the question and also provide a brief explanation as to which information in the context helped
             you answer the user's question.
@@ -259,7 +274,31 @@ def chat(question, context):
         "Answer":
 
             '''
-    prompt = ChatPromptTemplate.from_template(template)
+    
+
+    sum_template = '''
+            You are a helpful summarisation assistant. Your task is to read the document content provided in the context 
+            and generate a 100 word summary. Start your response by giving one sentence to provide a broad overview of the topic.
+            Next sentence should focus on key themes that emerge from the context. The last sentence should focus on important insights for
+            the user to take home.
+
+            The user might also provide some specific instructions on how to create a summary, in that case, follow those instructions
+
+            "Context": {context}
+            
+            "Instructions": {question}
+
+            "Summary": 
+                
+                
+                '''
+    #Deciding which prompt template to use. can stack multiple prompts like this.
+
+    if task =='summarise':
+        prompt = ChatPromptTemplate.from_template(sum_template)
+    
+    if task =='qa':
+        prompt == ChatPromptTemplate.from_template(qa_template)
 
 
     model = OllamaLLM(model="llama3.2:1b")

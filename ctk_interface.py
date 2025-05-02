@@ -53,40 +53,60 @@ class chat_frame(ctk.CTkScrollableFrame):
         
         #creating a select folder for RAG button
         self.open_folder_btn = ctk.CTkButton(self, text = "Select Folder for RAG", hover_color='black', command= self.open_folder_click )
-        self.open_folder_btn.grid(row = 0, column = 0, padx = (20,20), pady = (20,20), sticky = 'e')
+        self.open_folder_btn.grid(row = 0, column = 0, padx = (20,20), pady = (20,20), sticky = '')
+
+        #Displaying a label that tells that this section displays images of pdfs
+        self.display_pdf_btn = ctk.CTkButton(self, text = "Display Image from retrieved Doc"  )
+        self.display_pdf_btn.grid(row = 1, column = 2, padx = (20,20), pady = (20,20), sticky = '')
        
        #Creating an input field to search and retrieve document:
         self.search_directory_input = ctk.CTkEntry(self, placeholder_text = "Which document would you like to speak with?", height = 50, font=("Arial", 18))
-        self.search_directory_input.grid(row = 1, column = 0, columnspan = 2, padx = 0, pady = 10, sticky = 'ew')
+        self.search_directory_input.grid(row = 1, column = 0, columnspan = 1, padx = 20, pady = 10, sticky = 'ew')
         self.search_directory_input.bind("<Return>", self.submit_search_query_event)
         #Creating a submit search button
         self.search_dir_btn = ctk.CTkButton(self, text = 'Search', hover_color='black', command= self.submit_search_query)
-        self.search_dir_btn.grid(row = 2, column = 0, padx = 0, pady = 10, sticky = 'e')
+        self.search_dir_btn.grid(row = 2, column = 0, padx = 20, pady = 10, sticky = '')
 
        #Creating s display window for search results
         self.search_results_display = ctk.CTkTextbox(self, bg_color= 'transparent', text_color= 'white', wrap='word', height=100, font=("Arial", 12))
-        self.search_results_display.grid(row = 3, column = 0, padx = 20, pady = 20, columnspan = 2, sticky = 'nsew')
-       
+        self.search_results_display.grid(row = 3, column = 0, padx = 20, pady = 20, columnspan = 1, sticky = 'nsew')
+        self.search_results_display.configure(font= ("Arial", 12))
         #adding a page break
         self.page_break = ctk.CTkLabel(self, text = '', fg_color='grey', width = 10, height=10)
-        self.page_break.grid(row = 4, column = 0, columnspan = 2, padx = (10,10), pady = (10,10), sticky = 'ew')
+        self.page_break.grid(row = 4, column = 0, columnspan = 1, padx = (10,10), pady = (10,10), sticky = 'ew')
+
+        #adding a vertical page break
+        self.page_break = ctk.CTkLabel(self, text = '', fg_color='grey', width = 10, height=10)
+        self.page_break.grid(row = 1, column = 1, rowspan = 9,   padx = (30,10), pady = (10,10), sticky = 'ens')
 
        #creating a enter user_input field
         self.input_field = ctk.CTkEntry(self, placeholder_text= "What would you like to ask the RAG?", font=("Arial", 18), height = 50)
-        self.input_field.grid(row = 5, column = 0, padx = (40,20), pady = (20,20), sticky = 'ew', columnspan = 2)
+        self.input_field.grid(row = 5, column = 0, padx = (40,20), pady = (20,20), sticky = 'ew', columnspan = 1)
         self.input_field.bind("<Return>", self.submit_ques_rag_event)
         
         #creating a text window to display text
         self.chat_display = ctk.CTkTextbox(self, bg_color='transparent', text_color='white', wrap = 'word', font=("Arial", 12) )
-        self.chat_display.grid(row = 6, column = 0, columnspan = 2, padx = (40,40), pady = (20, 20), sticky = 'nsew')
+        self.chat_display.grid(row = 6, column = 0, columnspan = 1, padx = (40,20), pady = (20, 20), sticky = 'nsew')
         
+        #Creating a radiobutton for either qa or summarisation task
+        self.selected_task = ctk.StringVar(value='summarise')
+        self.sum_task_spec = ctk.CTkRadioButton(self, bg_color='transparent', text_color='white', text = 'Summarisation', variable=self.selected_task, font=("Arial", 12)  )
+        self.sum_task_spec.grid(row = 7, column = 0, padx = 20, pady = 10, sticky = 'w')
+
+        self.qa_task_spec = ctk.CTkRadioButton(self, bg_color='transparent', text_color='white', text = 'Question Answering', variable=self.selected_task, font=("Arial", 12)  )
+        self.qa_task_spec.grid(row = 8, column = 0, padx = 20, pady = 10, sticky = 'w')
+
         #creating a submit button
         self.submit_btn = ctk.CTkButton(self, text='Submit question', hover_color='black', command=self.submit_ques_rag)
-        self.submit_btn.grid(row = 7, column = 0, padx = 20, pady = (0,40), sticky = 'e')
+        self.submit_btn.grid(row = 9, column = 0, padx = 20, pady = (0,40), sticky ='' )
+        
+        
+        
         
         self.grid_rowconfigure(0, weight=0)
         self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=1)
+        self.grid_columnconfigure(1, weight=0)
+        self.grid_columnconfigure(2, weight=1)
         self.grid_rowconfigure(1, weight=0)
         self.grid_rowconfigure(2, weight=0)
         # self.grid_rowconfigure(3, weight=0)
@@ -120,8 +140,10 @@ class chat_frame(ctk.CTkScrollableFrame):
         '''
         relevant_doc = ''
         retrieved_docs = self.embedder.retrieve_chunks(query, 3)
-        for doc in retrieved_docs:
-            relevant_doc += str(doc.metadata['source'])
+        #Display only the source of the first chunk, assuming that all other chunks will be from the same document.
+        relevant_doc = str(retrieved_docs[0].metadata['source'])
+        
+        for doc in retrieved_docs:    
             self.chat_history.append({"role": "Page Content", "content": doc.page_content})
         
         return relevant_doc
@@ -144,8 +166,8 @@ class chat_frame(ctk.CTkScrollableFrame):
             self.embedder = embed_search_retrieve(self.selected_folder_path)
             
             
-            self.folder_path_label = ctk.CTkLabel(self, text=f"Selected Folder: {self.selected_folder_path[20:]}", fg_color='grey', text_color='blue')
-            self.folder_path_label.grid(row = 0, column = 1, padx = (20,20), pady = (20,20), sticky = 'w')
+            self.folder_path_label = ctk.CTkLabel(self, text=f"Folder Selected Successfully", fg_color='blue', text_color='white')
+            self.folder_path_label.grid(row = 0, column = 0, padx = (20,20), pady = (20,20), sticky = 'e')
 
         #This function also starts the embedding process
         #Creates a new_window that shows progress bar for embedding
@@ -174,7 +196,8 @@ class chat_frame(ctk.CTkScrollableFrame):
             self.chat_display.insert("end", f"BOT: It was nice to chat with you, have a great day\n")
         
         self.chat_display.insert("end", f"User: {user_input}\n")
-        self.chat_display.insert("end", f"BOT: {self.generate_response(user_input)}\n")
+        self.generate_response(user_input)
+        # self.chat_display.insert("end", f"BOT: {self.generate_response(user_input)}\n")
         
 
 
@@ -192,9 +215,12 @@ class chat_frame(ctk.CTkScrollableFrame):
         for msg in self.chat_history:
             context += f"{msg['role'].capitalize()} : {msg['content']}\n"
             logging.debug(context)
-        ai_response = chat(user_input, context)
-        self.chat_history.append({"role": "chatbot", "content": ai_response})
-        return ai_response
+        
+        #add a progress bar on top of the Textbox to show user that answer is being generated.
+        
+        #create a threaded llm_call function to call the llm in a separate thread
+        logging.debug(f"Calling LLM now")
+        threading.Thread(target=self.threaded_llm_call, args=(user_input, context), daemon = True).start()
 
 
 
@@ -207,6 +233,19 @@ class chat_frame(ctk.CTkScrollableFrame):
             self.embedder.load_and_embed_docs(update_progress= update_progress)
 
         threading.Thread(target=thread_target, daemon=True).start()
+
+    
+    def threaded_llm_call(self, user_input, context):
+        '''
+        Creates a separate function in which the LLM is called, this is so that this function can be threaded easily.
+        '''
+        logging.debug(f"Inside the threaded function now")
+        response = chat(user_input, context) #the chat function is from the chatbot.py script
+        logging.debug(f"The LLM has created a response, but the response is not visible")
+        self.chat_display.insert("end", f"BOT: {response}\n")
+        logging.debug(f"The llm has responded and the response shown")
+
+
 
 
 class chatbot(ctk.CTk):

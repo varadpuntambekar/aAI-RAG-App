@@ -15,6 +15,10 @@ import sys
 import logging
 from chromadb.config import Settings
 import chromadb.utils.embedding_functions 
+import pymupdf
+from PIL import Image, ImageTk
+import io
+
 #Declaring variables that I will use later
 
 
@@ -36,7 +40,7 @@ def get_application_path():
 
 class embed_search_retrieve(object):
 
-    def __init__(self, rag_directory):
+    def __init__(self, rag_directory, filepath = None):
         #initialize the variables such as the vectorstore
         self.persist_directory = f"{rag_directory}_chroma_embeddings"
         self.collection_store = "chroma_collection"
@@ -47,7 +51,7 @@ class embed_search_retrieve(object):
         logging.debug(f"RAG directory selected {self.rag_directory_abspath}")
         self.persist_directory_abspath = os.path.abspath(self.persist_directory)
         logging.debug(f"Vectorstore directory: {self.persist_directory_abspath}")
-        
+        self.filepath = filepath
         logging.debug("Embed Search retrieve class initiated from ctk_interface")
 
         self.vectorstore = self.create_or_load_vectorstore_exception()
@@ -239,17 +243,61 @@ class embed_search_retrieve(object):
         self.updated_vectorstore = self.embded_files(document_list= self.chunked_flies, update_progress = update_progress)
 
         return self.updated_vectorstore
+    
+    def load_and_embed_file(self, filepath):
+        '''
+        Input: An absolute filepath
+        Returns: A vector embedding of that particular document 
+        '''
+        #Writing a composite function that loads, splits and embeds one doc that is uploaded.
+        working_directory = os.getcwd()
+        embedding_class = embed_search_retrieve(working_directory)    
+    
+        file_to_load = [self.filepath]
+        
+        loaded_file = self.load_docs(file_to_load)
+
+        chunked_file_pages = self.split_docs(loaded_file)
+
+        pass        
+
 
     def retrieve_chunks(self, question, n_results = 3):
         '''
         Input: Query that the user asks and the vectorstore which stores all the embeddings
+        Output: Tuple containing a List[Document] element of retrieved chunks ImageTk object that is the page in the document with the highlighted text.
         '''
-        
+        #get the closest chunks
         retriever = self.updated_vectorstore.as_retriever(search_kwargs = {'k': n_results})
         retrieved_chunks = retriever.invoke(question)
 
-        return retrieved_chunks
+        logging.debug(f"Retrieved docs are {retrieved_chunks[0].metadata['source']}")
 
+        #Now extract the source and the page number from the retrieved doc and display the image
+        relevant_page_source = retrieved_chunks[0].metadata['source']
+        relevant_page_num = retrieved_chunks[0].metadata['page']
+
+        load_doc = pymupdf.open(relevant_page_source)
+        relevant_page = load_doc.load_page(relevant_page_num)
+
+        highlight_instances = relevant_page.search_for(retrieved_chunks[0].page_content, quads = False)
+
+        relevant_page.add_highlight_annot(highlight_instances)
+
+        page_to_display = relevant_page
+        
+        
+        #Returning img_data to the function in the UI
+
+        # pix = relevant_page.get_pixmap(annots = True)
+        # img_data = pix.tobytes('png')
+
+        #Tk image does not scale appropriately to high DPI displays
+        # image = Image.open(io.BytesIO(img_data))
+        # photo_to_display = ImageTk.PhotoImage(image)
+
+        return retrieved_chunks, page_to_display
+    
 
 
 

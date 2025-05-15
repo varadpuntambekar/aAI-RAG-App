@@ -91,7 +91,7 @@ class chat_frame(ctk.CTkScrollableFrame):
         self.input_field.bind("<Return>", self.submit_ques_rag_event)
         
         #creating a text window to display text
-        self.chat_display = ctk.CTkTextbox(self, bg_color='transparent', text_color='white', wrap = 'word', font=("Arial", 12) )
+        self.chat_display = ctk.CTkTextbox(self, bg_color='transparent', text_color='white', wrap = 'word', font=("Arial", 12), height = 400 )
         self.chat_display.grid(row = 5, column = 0, columnspan = 1, padx = (40,20), pady = (20, 20), sticky = 'nsew')
         self.chat_display.configure(font = ("Arial", 12))
         #Creating a radiobutton for either qa or summarisation task
@@ -146,7 +146,7 @@ class chat_frame(ctk.CTkScrollableFrame):
         '''
         search_query = self.search_directory_input.get()
         logging.debug(search_query)
-        self.chat_display.insert("end", f"User search query: {search_query}\n")
+        # self.chat_display.insert("end", f"User search query: {search_query}\n")
         self.chat_display.insert("end", f"The RAG retrieved the following document \n{self.get_relevant_doc(search_query)}\n")
         self.search_directory_input.delete(0,'end')
 
@@ -380,6 +380,7 @@ def get_application_path():
 
 
 if __name__ == "__main__":
+    
     
     #creating a log file , very important to print out statements if I cannot do a 
     log_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app-debug.log")

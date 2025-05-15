@@ -1,2 +1,159 @@
-2025-05-06 16:40:54,279 - DEBUG - App Started 
-2025-05-06 16:40:54,281 - DEBUG - c:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\aAI-RAG-App 
+2025-05-08 18:00:14,822 - DEBUG - App Started 
+2025-05-08 18:00:14,822 - DEBUG - C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\aAI-RAG-App 
+2025-05-08 18:00:32,502 - DEBUG - the folder selected is C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\RAG_LLM_DES_CaCx_app\data 
+2025-05-08 18:00:32,517 - DEBUG - Embed model: model='nomic-embed-text' base_url=None client_kwargs={} mirostat=None mirostat_eta=None mirostat_tau=None num_ctx=None num_gpu=None keep_alive=None num_thread=None repeat_last_n=None repeat_penalty=None temperature=None stop=None tfs_z=None top_k=None top_p=None 
+2025-05-08 18:00:32,517 - DEBUG - RAG directory selected C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\RAG_LLM_DES_CaCx_app\data 
+2025-05-08 18:00:32,517 - DEBUG - Vectorstore directory: C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\RAG_LLM_DES_CaCx_app\data_chroma_embeddings 
+2025-05-08 18:00:32,517 - DEBUG - Embed Search retrieve class initiated from ctk_interface 
+2025-05-08 18:00:32,517 - DEBUG - Creating or Loading vectorstore in C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\RAG_LLM_DES_CaCx_app\data_chroma_embeddings 
+2025-05-08 18:00:32,517 - DEBUG - Persist directory exists: True 
+2025-05-08 18:00:32,517 - DEBUG - Embedding model type: <class 'langchain_ollama.embeddings.OllamaEmbeddings'> 
+2025-05-08 18:00:32,576 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information. 
+2025-05-08 18:00:32,612 - DEBUG - Starting component System 
+2025-05-08 18:00:32,612 - DEBUG - Starting component Posthog 
+2025-05-08 18:00:32,944 - DEBUG - Successfully accessed collection with 2394 embeddings 
+2025-05-08 18:00:32,944 - DEBUG - Loaded vectorstore chroma_collection with 2394 embeddings 
+2025-05-08 18:00:32,944 - DEBUG - C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\aAI-RAG-App 
+2025-05-08 18:00:32,959 - DEBUG - Load and Embed function activated 
+2025-05-08 18:00:33,228 - DEBUG - Starting new HTTPS connection (1): us.i.posthog.com:443 
+2025-05-08 18:00:33,320 - DEBUG - 0 
+2025-05-08 18:00:33,320 - DEBUG - All docs from this folder have already been embedded 
+2025-05-08 18:00:33,320 - DEBUG - ===0 Docs locked and loaded, ready to be split and embedded ==== 
+2025-05-08 18:00:33,320 - DEBUG - ===All docs now split, chunks created = 0=== 
+2025-05-08 18:00:33,320 - DEBUG - ===Added all files=== 
+2025-05-08 18:00:33,638 - DEBUG - https://us.i.posthog.com:443 "POST /batch/ HTTP/1.1" 200 15 
+2025-05-08 18:00:46,758 - DEBUG - tell me about theory of change 
+2025-05-08 18:00:46,758 - DEBUG - connect_tcp.started host='127.0.0.1' port=11434 local_address=None timeout=None socket_options=None 
+2025-05-08 18:00:46,758 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000023883FFF350> 
+2025-05-08 18:00:46,774 - DEBUG - send_request_headers.started request=<Request [b'POST']> 
+2025-05-08 18:00:46,774 - DEBUG - send_request_headers.complete 
+2025-05-08 18:00:46,774 - DEBUG - send_request_body.started request=<Request [b'POST']> 
+2025-05-08 18:00:46,774 - DEBUG - send_request_body.complete 
+2025-05-08 18:00:46,774 - DEBUG - receive_response_headers.started request=<Request [b'POST']> 
+2025-05-08 18:00:47,726 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Date', b'Thu, 08 May 2025 17:00:47 GMT'), (b'Transfer-Encoding', b'chunked')]) 
+2025-05-08 18:00:47,726 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/embed "HTTP/1.1 200 OK" 
+2025-05-08 18:00:47,726 - DEBUG - receive_response_body.started request=<Request [b'POST']> 
+2025-05-08 18:00:47,727 - DEBUG - receive_response_body.complete 
+2025-05-08 18:00:47,727 - DEBUG - response_closed.started 
+2025-05-08 18:00:47,727 - DEBUG - response_closed.complete 
+2025-05-08 18:00:47,764 - DEBUG - Retrieved docs are C:\Users\varad\Desktop\Oxford\DPhil Cervical Cancer Scale-up\Code\RAG_LLM_DES_CaCx_app\data\Dana 2013 Theory of Change Technical Papers.pdf 
+2025-05-08 18:00:47,938 - DEBUG - STREAM b'IHDR' 16 13 
+2025-05-08 18:00:47,938 - DEBUG - STREAM b'pHYs' 41 9 
+2025-05-08 18:00:47,938 - DEBUG - STREAM b'IDAT' 62 132128 
+2025-05-08 18:00:48,004 - DEBUG - Page content : show the desired change for the outcome associated with the indicator to be 
+considered fulfilled.   
+Theory of 
+Change 
+Broadly, a set of beliefs and assumptions about what changes need to happen 
+and how to bring them about, to reach a stated goal.  As a methodological 
+practice, Theory of Change is a process through which participants construct a 
+descriptive model of (both graphic and narrative) that explains the outcomes
+ 
+2025-05-08 18:00:48,004 - DEBUG - Page content : show the desired change for the outcome associated with the indicator to be 
+considered fulfilled.   
+Theory of 
+Change 
+Broadly, a set of beliefs and assumptions about what changes need to happen 
+and how to bring them about, to reach a stated goal.  As a methodological 
+practice, Theory of Change is a process through which participants construct a 
+descriptive model of (both graphic and narrative) that explains the outcomes
+Page content : Theory of Change Technical Papers 
+ 
+                                      Center for Human Environments         365 Fifth Avenue          New York, NY 10016 
+      Copyright © 2003 All rights reserved. Document last modified 7/22/2003 
+2 
+ 
+1. What is Theory of Change? 
+ 
+ 
+ 
+ 
+ 
+Basic Definition 
+At its heart, Theory of Change spells out initiative or program logic. It defines long-term goals and then
+ 
+2025-05-08 18:00:48,004 - DEBUG - Page content : show the desired change for the outcome associated with the indicator to be 
+considered fulfilled.   
+Theory of 
+Change 
+Broadly, a set of beliefs and assumptions about what changes need to happen 
+and how to bring them about, to reach a stated goal.  As a methodological 
+practice, Theory of Change is a process through which participants construct a 
+descriptive model of (both graphic and narrative) that explains the outcomes
+Page content : Theory of Change Technical Papers 
+ 
+                                      Center for Human Environments         365 Fifth Avenue          New York, NY 10016 
+      Copyright © 2003 All rights reserved. Document last modified 7/22/2003 
+2 
+ 
+1. What is Theory of Change? 
+ 
+ 
+ 
+ 
+ 
+Basic Definition 
+At its heart, Theory of Change spells out initiative or program logic. It defines long-term goals and then
+Page content : Theory of Change Technical Papers 
+ 
+                                      Center for Human Environments         365 Fifth Avenue          New York, NY 10016 
+      Copyright © 2003 All rights reserved. Document last modified 7/22/2003 
+15 
+brings success.  A good theory provides the logic and specificity needed for the ongoing learning 
+that will make the theory ultimately “right”. 
+ 
+References 
+Clark, H. (2004). Deciding the Scope of a Theory of Change. New York: ActKnowledge monograph.
+ 
+2025-05-08 18:00:48,004 - DEBUG - Page content : show the desired change for the outcome associated with the indicator to be 
+considered fulfilled.   
+Theory of 
+Change 
+Broadly, a set of beliefs and assumptions about what changes need to happen 
+and how to bring them about, to reach a stated goal.  As a methodological 
+practice, Theory of Change is a process through which participants construct a 
+descriptive model of (both graphic and narrative) that explains the outcomes
+Page content : Theory of Change Technical Papers 
+ 
+                                      Center for Human Environments         365 Fifth Avenue          New York, NY 10016 
+      Copyright © 2003 All rights reserved. Document last modified 7/22/2003 
+2 
+ 
+1. What is Theory of Change? 
+ 
+ 
+ 
+ 
+ 
+Basic Definition 
+At its heart, Theory of Change spells out initiative or program logic. It defines long-term goals and then
+Page content : Theory of Change Technical Papers 
+ 
+                                      Center for Human Environments         365 Fifth Avenue          New York, NY 10016 
+      Copyright © 2003 All rights reserved. Document last modified 7/22/2003 
+15 
+brings success.  A good theory provides the logic and specificity needed for the ongoing learning 
+that will make the theory ultimately “right”. 
+ 
+References 
+Clark, H. (2004). Deciding the Scope of a Theory of Change. New York: ActKnowledge monograph.
+User : tell me about theory of change
+ 
+2025-05-08 18:00:48,004 - DEBUG - Calling LLM now 
+2025-05-08 18:00:48,004 - DEBUG - Inside the threaded function now 
+2025-05-08 18:00:48,033 - DEBUG - https://us.i.posthog.com:443 "POST /batch/ HTTP/1.1" 200 15 
+2025-05-08 18:00:48,064 - DEBUG - connect_tcp.started host='127.0.0.1' port=11434 local_address=None timeout=None socket_options=None 
+2025-05-08 18:00:48,065 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000023884014790> 
+2025-05-08 18:00:48,065 - DEBUG - send_request_headers.started request=<Request [b'POST']> 
+2025-05-08 18:00:48,065 - DEBUG - send_request_headers.complete 
+2025-05-08 18:00:48,066 - DEBUG - send_request_body.started request=<Request [b'POST']> 
+2025-05-08 18:00:48,066 - DEBUG - send_request_body.complete 
+2025-05-08 18:00:48,066 - DEBUG - receive_response_headers.started request=<Request [b'POST']> 
+2025-05-08 18:01:01,194 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/x-ndjson'), (b'Date', b'Thu, 08 May 2025 17:01:01 GMT'), (b'Transfer-Encoding', b'chunked')]) 
+2025-05-08 18:01:01,194 - INFO - HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK" 
+2025-05-08 18:01:01,194 - DEBUG - receive_response_body.started request=<Request [b'POST']> 
+2025-05-08 18:01:26,566 - DEBUG - receive_response_body.complete 
+2025-05-08 18:01:26,567 - DEBUG - response_closed.started 
+2025-05-08 18:01:26,567 - DEBUG - response_closed.complete 
+2025-05-08 18:01:26,569 - DEBUG - The LLM has created a response, but the response is not visible 
+2025-05-08 18:01:26,570 - DEBUG - The llm has responded and the response shown 

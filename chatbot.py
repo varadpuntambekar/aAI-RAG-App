@@ -346,7 +346,7 @@ def chat(question, context, task = 'summarise'):
         prompt = ChatPromptTemplate.from_template(sum_template)
     
     if task =='qa':
-        prompt == ChatPromptTemplate.from_template(qa_template)
+        prompt = ChatPromptTemplate.from_template(qa_template)
 
 
     model = OllamaLLM(model="llama3.2:1b")
